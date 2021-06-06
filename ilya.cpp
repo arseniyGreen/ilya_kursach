@@ -34,7 +34,8 @@ private:
     int totalBudget;
 
     std::vector<std::vector<Cell>> field; /* field array X*Y */
-    std::vector<std::pair<int, int>> ans;
+    std::vector<std::vector<int>> A;
+    std::vector<int> ans;
     std::vector<int> costVec;
     std::vector<int> incomeVec;
 
@@ -58,6 +59,26 @@ public:
             }
             field.push_back(v1);
         }
+
+        std::cout << "Method invoked\n";
+
+        std::cout << "Cell count = " << cellCount << std::endl;
+        std::cout << "Total budget = " << totalBudget << std::endl;
+
+        std::cout << "A initialized\n";
+
+        for (size_t i = 0; i < cellCount + 1; i++)
+        {
+            std::vector<int> v1;
+            //std::cout << "Inner vector initialized\n";
+            for (size_t j = 0; j < totalBudget; j++)
+            {
+                // std::cout << "Appended\n";
+                v1.push_back(0);
+            }
+            A.push_back(v1);
+        }
+
     };
     ~Field() {};
 
@@ -121,30 +142,19 @@ public:
     A(k,s) = field(cellcnt, totalBudget)
     */
 
+    void findAns(int k, int s)
+    {
+        if(A[k - 1][s] == A[k][s])
+            findAns(k - 1, s);
+        else
+        {
+            findAns(k - 1, s - costVec[k]);
+            ans.push_back(k);
+        }
+    }
+
     void calculate()
     {
-        //int matrix[cellCount][totalBudget + 1];
-
-        std::cout << "Method invoked\n";
-
-        std::cout << "Cell count = " << cellCount << std::endl;
-        std::cout << "Total budget = " << totalBudget << std::endl;
-
-        std::vector<std::vector<int>> A;
-
-        std::cout << "A initialized\n";
-
-        for (size_t i = 0; i < cellCount + 1; i++)
-        {
-            std::vector<int> v1;
-            //std::cout << "Inner vector initialized\n";
-            for (size_t j = 0; j < totalBudget; j++)
-            {
-                // std::cout << "Appended\n";
-                v1.push_back(0);
-            }
-            A.push_back(v1);
-        }
         std::cout << "Setting vectors...\n";
         setVectors();
         std::cout << "Vectors set\n";
@@ -169,6 +179,8 @@ public:
                 std::cout << A[i][j] << "\t";
             std::cout << std::endl;
         }
+
+        findAns(1, 1);
 
     }
 };
