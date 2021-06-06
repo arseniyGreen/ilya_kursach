@@ -1,0 +1,11 @@
+﻿  Ilya.cpp
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(49,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(53,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(92,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(93,31): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(101,19): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(141,34): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(152,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(158,27): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Ilya.cpp(167,27): warning C4018: '<': signed/unsigned mismatch
+  Ilya.vcxproj -> C:\Users\Arseniy\Documents\GitHub\ilya_kursach\Ilya\Debug\Ilya.exe

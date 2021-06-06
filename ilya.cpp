@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <vector>
 #include <algorithm>
 #include <cmath>
@@ -63,7 +63,7 @@ public:
 
     size_t getCellCount() { return cellCount; }
 
-    void setVectors() 
+    void setVectors()
     {
         for (size_t i = 0; i < field[0].size(); i++)
             for (size_t j = 0; j < field.size(); j++)
@@ -73,7 +73,7 @@ public:
             }
     }
 
-    void printVectors() 
+    void printVectors()
     {
         std::cout << "Income vector : ";
         for (size_t i = 0; i < incomeVec.size(); i++) std::cout << incomeVec[i];
@@ -81,7 +81,7 @@ public:
         for (size_t i = 0; i < costVec.size(); i++) std::cout << costVec[i];
     }
 
-    void setData(size_t X, size_t Y, int cost_, int income_) 
+    void setData(size_t X, size_t Y, int cost_, int income_)
     {
         field[X][Y].setCost(cost_);
         field[X][Y].setIncome(income_);
@@ -107,7 +107,7 @@ public:
             }
         }
     }
-    int getFieldSize() 
+    int getFieldSize()
     {
         return field.size() * field[0].size();
     }
@@ -134,13 +134,13 @@ public:
 
         std::cout << "A initialized\n";
 
-        for (size_t i = 0; i < cellCount + 1; i++) 
+        for (size_t i = 0; i < cellCount + 1; i++)
         {
             std::vector<int> v1;
             //std::cout << "Inner vector initialized\n";
             for (size_t j = 0; j < totalBudget; j++)
             {
-               // std::cout << "Appended\n";
+                // std::cout << "Appended\n";
                 v1.push_back(0);
             }
             A.push_back(v1);
@@ -155,13 +155,13 @@ public:
             std::cout << std::endl;
         }
 
-        for(int k = 1; k <= cellCount; k++)
-            for(int s = 1; s <= totalBudget; s++)
-                if(s >= costVec[k])
+        for (int k = 1; k <= cellCount; k++)
+            for (int s = 1; s <= totalBudget; s++)
+                if (s >= costVec[k])
                     A[k][s] = std::max(A[k - 1][s], A[k - 1][s - costVec[k]] + incomeVec[k]);
                 else
                     A[k][s] = A[k - 1][s];
-        
+
         std::cout << "Calculated!\n";
 
         for (int i = 0; i < cellCount + 1; i++) {
