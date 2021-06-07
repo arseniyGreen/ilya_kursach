@@ -33,11 +33,15 @@ private:
 
     int totalBudget;
 
+    int NumberOfItems;
+    int WeightOfBag;
+
     std::vector<std::vector<Cell>> field; /* field array X*Y */
+
     std::vector<std::vector<int>> A;
     std::vector<int> ans;
-    std::vector<int> costVec;
-    std::vector<int> incomeVec;
+    std::vector<int> weights;
+    std::vector<int> prices;
 
 public:
     Field() {};
@@ -60,24 +64,14 @@ public:
             field.push_back(v1);
         }
 
-        std::cout << "Method invoked\n";
-
-        std::cout << "Cell count = " << cellCount << std::endl;
-        std::cout << "Total budget = " << totalBudget << std::endl;
-
-        std::cout << "A initialized\n";
-
-        for (size_t i = 0; i < cellCount + 1; i++)
-        {
-            std::vector<int> v1;
-            //std::cout << "Inner vector initialized\n";
-            for (size_t j = 0; j < totalBudget; j++)
-            {
-                // std::cout << "Appended\n";
-                v1.push_back(0);
-            }
-            A.push_back(v1);
-        }
+        A = std::vector<std::vector<int>>(NumberOfItems + 1), std::vector<int>(WeightOfBag + 1));
+        ans = std::vector<int>(NumberOfItems);
+        for (int k = 1; k <= NumberOfItems; k++)
+            for (int s = 1; s <= WeightOfBag; s++)
+                if (s >= weights[k - 1])
+                    A[k][s] = std::max(A[k - 1][s], A[k - 1][s - weights[k - 1]] + prices[k - 1]);
+                else
+                    A[k][s] = A[k - 1][s];
 
     };
     ~Field() {};
@@ -89,17 +83,17 @@ public:
         for (size_t i = 0; i < field[0].size(); i++)
             for (size_t j = 0; j < field.size(); j++)
             {
-                incomeVec.push_back(field[i][j].getIncome());
-                costVec.push_back(field[i][j].getCost());
+                prices.push_back(field[i][j].getIncome());
+                weights.push_back(field[i][j].getCost());
             }
     }
 
     void printVectors()
     {
         std::cout << "Income vector : ";
-        for (size_t i = 0; i < incomeVec.size(); i++) std::cout << incomeVec[i];
+        for (size_t i = 0; i < prices.size(); i++) std::cout << prices[i];
         std::cout << std::endl << "Cost vector : ";
-        for (size_t i = 0; i < costVec.size(); i++) std::cout << costVec[i];
+        for (size_t i = 0; i < weights.size(); i++) std::cout << weights[i];
     }
 
     void setData(size_t X, size_t Y, int cost_, int income_)
@@ -142,48 +136,20 @@ public:
     A(k,s) = field(cellcnt, totalBudget)
     */
 
-    void findAns(int k, int s)
+    void findAns(int NumberOfItems, int WeightOfBag) 
     {
-        if(A[k - 1][s] == A[k][s])
-            findAns(k - 1, s);
+        if (A[NumberOfItems][WeightOfBag] == 0)
+            return;
+        if (A[NumberOfItems - 1][WeightOfBag] == A[NumberOfItems][WeightOfBag])
+        {
+            findAns(NumberOfItems - 1, WeightOfBag);
+        }
         else
         {
-            findAns(k - 1, s - costVec[k]);
-            ans.push_back(k);
+            findAns(NumberOfItems - 1, WeightOfBag - weights[NumberOfItems -1]);
+            ans[NumberOfItems - 1] = 1;
         }
     }
-
-    void calculate()
-    {
-        std::cout << "Setting vectors...\n";
-        setVectors();
-        std::cout << "Vectors set\n";
-
-        for (int i = 0; i < cellCount + 1; i++) {
-            for (int j = 0; j < totalBudget; j++)
-                std::cout << A[i][j] << "\t";
-            std::cout << std::endl;
-        }
-
-        for (int k = 1; k <= cellCount; k++)
-            for (int s = 1; s <= totalBudget; s++)
-                if (s >= costVec[k])
-                    A[k][s] = std::max(A[k - 1][s], A[k - 1][s - costVec[k]] + incomeVec[k]);
-                else
-                    A[k][s] = A[k - 1][s];
-
-        std::cout << "Calculated!\n";
-
-        for (int i = 0; i < cellCount + 1; i++) {
-            for (int j = 0; j < totalBudget; j++)
-                std::cout << A[i][j] << "\t";
-            std::cout << std::endl;
-        }
-
-        findAns(1, 1);
-
-    }
-};
 
 std::ostream& operator<<(std::ostream& out, Cell cell) { return out << "Income : " << cell.getIncome() << " Cost : " << cell.getCost(); }
 
